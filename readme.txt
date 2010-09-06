@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Private BuddyPress ===
 Contributors: gigalinux
 Donate link: http://bp-tutorials.de/spenden
 Tags: buddypress, protection, privacy, private, protect, hide, community
