@@ -25,3 +25,37 @@
  * MA 02110-1301 USA
  */
  
+class PrivateBuddyPress {
+	function PrivateBuddyPress() {
+		add_action('template_redirect', array($this, 'LoginRedirect'));
+	}
+	
+	function LoginRedirect() {
+		$redirect_to = $_SERVER['REQUEST_URI'];
+		
+		if ( false == is_user_logged_in() ):
+			if ( is_feed() ):
+				$credentials = array();
+				$credentials['user_login'] = $_SERVER['PHP_AUTH_USER'];
+				$credentials['user_password'] = $_SERVER['PHP_AUTH_PW'];
+				$user = wp_signon($credentials);
+
+				if ( is_wp_error( $user ) ):
+					header('WWW-Authenticate: Basic realm="' . get_option('blogtitle') . '"');
+					header('HTTP/1.0 401 Unauthorized');
+					die();
+				endif;
+			else:
+				wp_redirect(get_option('siteurl') . '/wp-login.php?redirect_to=' . $redirect_to);
+			endif;
+		endif;
+	}
+	
+	function AdminOptions() {
+		
+	}
+}
+
+// Init the plugin at WordPress startup
+function PrivateBuddyPress() { $this = new PrivateBuddyPress(); }
+add_action('plugins_loaded', 'PrivateBuddyPress');

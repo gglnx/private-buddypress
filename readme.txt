@@ -1,5 +1,5 @@
 === Private BuddyPress ===
-Contributors: gigalinux
+Contributors: GIGALinux
 Donate link: http://bp-tutorials.de/spenden
 Tags: buddypress, protection, privacy, private, protect, hide, community
 Requires at least: 3.0
@@ -10,7 +10,7 @@ Protect your BuddyPress Installation from strangers. Only registered users will 
 
 == Description ==
 
-Protect your BuddyPress Installation from strangers. Only registered users will be allowed to view the installation and all other users will be redirected to the login page.
+Protect your BuddyPress Installation from strangers. Only registered users will be allowed to view the installation and all other users will be redirected to the login page. Users attempting to view blog content via RSS are also authenticated via HTTP Auth.
 
 You can exclude the registration and homepage from protection. In combination with the plugin 'Invitation Code Checker' your installation stays private but the registration is for users with a special password open.
 
