@@ -1,5 +1,5 @@
 === Private BuddyPress ===
-Contributors: GIGALinux
+Contributors: GIGALinux, gigalinux
 Tags: buddypress, protection, privacy, private, protect, hide, community
 Requires at least: 3.0, BuddyPress 1.2
 Tested up to: 3.0.1, BuddyPress 1.2.6
