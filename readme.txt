@@ -3,7 +3,7 @@ Contributors: GIGALinux, gigalinux
 Tags: buddypress, protection, privacy, private, protect, hide, community
 Requires at least: 3.0, BuddyPress 1.2
 Tested up to: 3.0.1, BuddyPress 1.2.6
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Protect your BuddyPress Installation from strangers. Only registered users will be allowed to view the installation.
 
@@ -32,10 +32,16 @@ Yes, you can define the excludes on the settings page unter `Settings -> Privacy
 
 == Changelog ==
 
+= 1.0.1 =
+* Notification update for users who downloaded the plugin before it was finished
+
 = 1.0 =
 * First release
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Notification update for users who downloaded the plugin before it was finished. Fixed the fatal PHP error and added translations.
 
 = 1.0 =
 First release
