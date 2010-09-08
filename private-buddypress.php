@@ -36,6 +36,9 @@ class PrivateBuddyPress {
 		$this->options = get_option('private_buddypress');
 		$this->dbVersion = get_option('private_buddypress_version');
 		
+		// Load textdomain
+		load_plugin_textdomain('private-buddypress', 'languages', dirname(plugin_basename(__FILE__)) . '/languages');
+		
 		// Add admin options
 		add_action('admin_init', array($this, 'AdminInit'));
 		
