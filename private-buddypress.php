@@ -5,7 +5,7 @@
  * Author: Dennis Morhardt
  * Author URI: http://www.dennismorhardt.de/
  * Plugin URI: http://bp-tutorials.de/
- * Version: 1.0
+ * Version: 1.0.2
  * Text Domain: private-buddypress
  * Domain Path: /languages
  *
@@ -62,6 +62,7 @@ class PrivateBuddyPress {
 		$options->exclude = new stdClass();
 		$options->exclude->homepage = false;
 		$options->exclude->registration = false;
+		$options->exclude->blogpages = false;
 			
 		// Add or update options to database
 		update_option('private_buddypress', $options);
@@ -105,6 +106,10 @@ class PrivateBuddyPress {
 		if ( true == $this->options->exclude->registration && ( bp_is_register_page() || bp_is_activation_page() ) )
 			return false;
 			
+		// No login required if blog pages are excluded
+		if ( true == $this->options->exclude->blogpages && bp_is_blog_page() )
+			return false;
+			
 		// Login required
 		return true;
 	}
@@ -113,10 +118,20 @@ class PrivateBuddyPress {
 		// Exclude homepage from protection
 		if ( '1' == $_POST["bp_protection_exclude_home"] )
 			$this->options->exclude->homepage = true;
+		else
+			$this->options->exclude->homepage = false;
 				
 		// Exclude registration from protection
 		if ( '1' == $_POST["bp_protection_exclude_registration"] )
 			$this->options->exclude->registration = true;
+		else
+			$this->options->exclude->registration = false;
+			
+		// Exclude blog pages from protection
+		if ( '1' == $_POST["bp_protection_exclude_blogpages"] )
+			$this->options->exclude->blogpages = true;
+		else
+			$this->options->exclude->blogpages = false;
 				
 		// Save options
 		update_option('private_buddypress', $this->options);
@@ -128,7 +143,8 @@ class PrivateBuddyPress {
 		echo '<tr valign="top">';
 		echo '<th scope="row">' . __('Exclude from protection', 'private-buddypress') . '</th>';
 		echo '<td>';
-		echo '<label for="bp_protection_exclude_home"><input name="bp_protection_exclude_home" id="bp_protection_exclude_home" value="1" ' . checked(true, $this->options->exclude->homepage, false) . ' type="checkbox"> ' . __('Front page', 'private-buddypress') . '</label><br>';
+		echo '<label for="bp_protection_exclude_home"><input name="bp_protection_exclude_home" id="bp_protection_exclude_home" value="1" ' . checked(true, $this->options->exclude->homepage, false) . ' type="checkbox"> ' . __('Front page', 'private-buddypress') . '</label><br />';
+		echo '<label for="bp_protection_exclude_blogpages"><input name="bp_protection_exclude_blogpages" id="bp_protection_exclude_blogpages" value="1" ' . checked(true, $this->options->exclude->blogpages, false) . ' type="checkbox"> ' . __('Blog pages', 'private-buddypress') . '</label><br />';
 		echo '<label for="bp_protection_exclude_registration"><input name="bp_protection_exclude_registration" id="bp_protection_exclude_registration" value="1" ' . checked(true, $this->options->exclude->registration, false) . ' type="checkbox"> ' . __('Registration', 'private-buddypress') . '</label>';
 		echo '</td>';
 		echo '</tr>';

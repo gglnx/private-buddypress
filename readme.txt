@@ -1,9 +1,9 @@
 === Private BuddyPress ===
-Contributors: GIGALinux, gigalinux
+Contributors: GIGALinux
 Tags: buddypress, protection, privacy, private, protect, hide, community
 Requires at least: 3.0, BuddyPress 1.2
 Tested up to: 3.0.1, BuddyPress 1.2.6
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 Protect your BuddyPress Installation from strangers. Only registered users will be allowed to view the installation.
 
@@ -11,7 +11,7 @@ Protect your BuddyPress Installation from strangers. Only registered users will 
 
 Protect your BuddyPress Installation from strangers. Only registered users will be allowed to view the installation and all other users will be redirected to the login page. Users attempting to view blog content via RSS are also authenticated via HTTP Auth.
 
-You can exclude the registration and homepage from protection. In combination with the plugin 'Invitation Code Checker' your installation stays private but the registration is for users with a special password open.
+You can exclude the registration, the homepage and blog pages (e.g. posts, archives and non-buddypress pages) from protection. In combination with the plugin 'Invitation Code Checker' your installation stays private but the registration is for users with a special password open.
 
 == Installation ==
 
@@ -22,7 +22,7 @@ Use the automatic plugin installation in the backand or install the plugin manue
 
 == Frequently Asked Questions ==
 
-= Can I exclude the homepage or the registration from protection =
+= Can I exclude the homepage, the registration or blog pages from protection =
 
 Yes, you can define the excludes on the settings page unter `Settings -> Privacy`.
 
@@ -32,6 +32,10 @@ Yes, you can define the excludes on the settings page unter `Settings -> Privacy
 
 == Changelog ==
 
+= 1.0.2 =
+* Fixed: Saving optings haven't worked correctly
+* Blog pages (e.g. posts, archives, non-buddypress pages) can now be excluded from protection
+
 = 1.0.1 =
 * Notification update for users who downloaded the plugin before it was finished
 
@@ -39,6 +43,9 @@ Yes, you can define the excludes on the settings page unter `Settings -> Privacy
 * First release
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Saving options now work correctly and added an option to exclude normal blog pages (e.g. posts, archives, non-buddypress pages) from protection.
 
 = 1.0.1 =
 Notification update for users who downloaded the plugin before it was finished. Fixed the fatal PHP error and added translations.
