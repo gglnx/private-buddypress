@@ -144,7 +144,7 @@ class PrivateBuddyPress {
 		echo '<th scope="row">' . __('Exclude from protection', 'private-buddypress') . '</th>';
 		echo '<td>';
 		echo '<label for="bp_protection_exclude_home"><input name="bp_protection_exclude_home" id="bp_protection_exclude_home" value="1" ' . checked(true, $this->options->exclude->homepage, false) . ' type="checkbox"> ' . __('Front page', 'private-buddypress') . '</label><br />';
-		echo '<label for="bp_protection_exclude_blogpages"><input name="bp_protection_exclude_blogpages" id="bp_protection_exclude_blogpages" value="1" ' . checked(true, $this->options->exclude->blogpages, false) . ' type="checkbox"> ' . __('Blog pages', 'private-buddypress') . '</label><br />';
+		echo '<label for="bp_protection_exclude_blogpages"><input name="bp_protection_exclude_blogpages" id="bp_protection_exclude_blogpages" value="1" ' . checked(true, $this->options->exclude->blogpages, false) . ' type="checkbox"> ' . __('Blog pages (posts, archives and non-buddypress pages)', 'private-buddypress') . '</label><br />';
 		echo '<label for="bp_protection_exclude_registration"><input name="bp_protection_exclude_registration" id="bp_protection_exclude_registration" value="1" ' . checked(true, $this->options->exclude->registration, false) . ' type="checkbox"> ' . __('Registration', 'private-buddypress') . '</label>';
 		echo '</td>';
 		echo '</tr>';
