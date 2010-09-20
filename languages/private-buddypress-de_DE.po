@@ -7,30 +7,34 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Private BuddyPress 1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/private-buddypress\n"
-"POT-Creation-Date: 2010-09-08 10:20+0000\n"
-"PO-Revision-Date: 2010-09-08 12:30+0100\n"
+"POT-Creation-Date: 2010-09-20 09:28+0000\n"
+"PO-Revision-Date: 2010-09-20 11:28+0100\n"
 "Last-Translator: Dennis Morhardt <info@dennismorhardt.de>\n"
 "Language-Team: Dennis Morhardt <info@dennismorhardt.de>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: private-buddypress.php:48
+#: private-buddypress.php:51
 msgid "BuddyPress Protection"
 msgstr "Schutz der BuddyPress-Seiten"
 
-#: private-buddypress.php:126
+#: private-buddypress.php:144
 msgid "Exclude from protection"
 msgstr "Ausnahmen vom Schutz"
 
-#: private-buddypress.php:128
+#: private-buddypress.php:146
 msgid "Front page"
 msgstr "Startseite"
 
-#: private-buddypress.php:129
+#: private-buddypress.php:147
+msgid "Blog pages (posts, archives and non-buddypress pages)"
+msgstr "Blogseiten (Artikel, Archive und normale statische Seiten)"
+
+#: private-buddypress.php:148
 msgid "Registration"
 msgstr "Registrierung"
 
@@ -54,3 +58,5 @@ msgstr "Dennis Morhardt"
 msgid "http://www.dennismorhardt.de/"
 msgstr "http://www.dennismorhardt.de/"
 
+#~ msgid "Blog pages"
+#~ msgstr "Blogseiten (Artikel, Archive und Nicht-BuddyPress-Seiten)"
