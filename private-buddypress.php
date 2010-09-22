@@ -44,6 +44,9 @@ class PrivateBuddyPress {
 		
 		// Add login redirect function
 		add_action('template_redirect', array($this, 'LoginRedirect'), 1);
+		
+		// Run action
+		do_action('pbp_init');
 	}
 		
 	function AdminInit() {
@@ -71,7 +74,7 @@ class PrivateBuddyPress {
 		
 	function LoginRedirect() {
 		// Get current position
-		$redirect_to = $_SERVER['REQUEST_URI'];
+		$redirect_to = apply_filters('pbp_redirect_to_after_login', $_SERVER['REQUEST_URI']);
 			
 		// Check if user is logged in
 		if ( false == is_user_logged_in() ):
@@ -91,7 +94,8 @@ class PrivateBuddyPress {
 				endif;
 			// Redirect to login page if for current page a is required
 			elseif ( $this->LoginRequired() ):
-				wp_redirect(get_option('siteurl') . '/wp-login.php?redirect_to=' . $redirect_to);
+				$loginPage = apply_filters('pbp_redirect_login_page', get_option('siteurl') . '/wp-login.php?redirect_to=' . $redirect_to, $redirect_to);
+				wp_redirect($loginPage);
 				exit;
 			endif;
 		endif;
@@ -111,7 +115,7 @@ class PrivateBuddyPress {
 			return false;
 			
 		// Login required
-		return true;
+		return apply_filters('pbp_login_required_check', true);
 	}
 		
 	function SaveAdminOptions() {
@@ -134,22 +138,25 @@ class PrivateBuddyPress {
 			$this->options->exclude->blogpages = false;
 				
 		// Save options
-		update_option('private_buddypress', $this->options);
+		update_option('private_buddypress', apply_filters('pbp_pre_options', $this->options));
+		
+		// Run action
+		do_action('pbp_save_options');
 	}
 		
-	function AdminOptions() {
-		// Add admin options
-		echo '<table class="form-table">';
-		echo '<tr valign="top">';
-		echo '<th scope="row">' . __('Exclude from protection', 'private-buddypress') . '</th>';
-		echo '<td>';
-		echo '<label for="bp_protection_exclude_home"><input name="bp_protection_exclude_home" id="bp_protection_exclude_home" value="1" ' . checked(true, $this->options->exclude->homepage, false) . ' type="checkbox"> ' . __('Front page', 'private-buddypress') . '</label><br />';
-		echo '<label for="bp_protection_exclude_blogpages"><input name="bp_protection_exclude_blogpages" id="bp_protection_exclude_blogpages" value="1" ' . checked(true, $this->options->exclude->blogpages, false) . ' type="checkbox"> ' . __('Blog pages (posts, archives and non-buddypress pages)', 'private-buddypress') . '</label><br />';
-		echo '<label for="bp_protection_exclude_registration"><input name="bp_protection_exclude_registration" id="bp_protection_exclude_registration" value="1" ' . checked(true, $this->options->exclude->registration, false) . ' type="checkbox"> ' . __('Registration', 'private-buddypress') . '</label>';
-		echo '</td>';
-		echo '</tr>';
-		echo '</table>';
-	}
+	function AdminOptions() { ?>
+		<table class="form-table">
+			<tr valign="top">
+				<th scope="row"><?php _e('Exclude from protection', 'private-buddypress'); ?></th>
+				<td>
+					<label for="bp_protection_exclude_home"><input name="bp_protection_exclude_home" id="bp_protection_exclude_home" value="1" <?php checked(true, $this->options->exclude->homepage); ?> type="checkbox"> <?php _e('Front page', 'private-buddypress'); ?></label><br />
+					<label for="bp_protection_exclude_blogpages"><input name="bp_protection_exclude_blogpages" id="bp_protection_exclude_blogpages" value="1" <?php checked(true, $this->options->exclude->blogpages); ?> type="checkbox"> <?php _e('Blog pages (posts, archives and non-buddypress pages)', 'private-buddypress'); ?></label><br />
+					<label for="bp_protection_exclude_registration"><input name="bp_protection_exclude_registration" id="bp_protection_exclude_registration" value="1" <?php checked(true, $this->options->exclude->registration); ?> type="checkbox"> <?php _e('Registration', 'private-buddypress'); ?></label>
+					<?php do_action('pbp_options_page'); ?>
+				</td>
+			</tr>
+		</table>
+	<?php }
 }
 
 // Add activation hook
