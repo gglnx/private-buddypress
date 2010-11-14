@@ -5,7 +5,7 @@
  * Author: Dennis Morhardt
  * Author URI: http://www.dennismorhardt.de/
  * Plugin URI: http://bp-tutorials.de/
- * Version: 1.0.2
+ * Version: 1.0.3
  * Text Domain: private-buddypress
  * Domain Path: /languages
  *
@@ -32,6 +32,9 @@ class PrivateBuddyPress {
 	var $dbVersion;
 
 	function PrivateBuddyPress() {
+		// Run action
+		do_action('pbp_init');
+	
 		// Load options
 		$this->options = get_option('private_buddypress');
 		$this->dbVersion = get_option('private_buddypress_version');
@@ -43,16 +46,16 @@ class PrivateBuddyPress {
 		add_action('admin_init', array($this, 'AdminInit'));
 		
 		// Add login redirect function
-		add_action('template_redirect', array($this, 'LoginRedirect'), 1);
-		
-		// Run action
-		do_action('pbp_init');
+		add_action('wp', array($this, 'LoginRedirect'), 1);
 	}
 		
 	function AdminInit() {
 		// Add settings section
 		add_settings_section('private-buddypress', __('BuddyPress Protection', 'private-buddypress'), array($this, 'AdminOptions'), 'privacy');
 		add_action('load-options.php', array($this, 'SaveAdminOptions'));
+		
+		// Run action
+		do_action('pbp_admin_init');
 	}
 		
 	function Install() {
@@ -71,15 +74,33 @@ class PrivateBuddyPress {
 		update_option('private_buddypress', $options);
 		update_option('private_buddypress_version', PRIVATE_BUDDYPRESS_VERSION);
 	}
+	
+	function IsBuddyPressFeed() {
+		// Get BuddyPress
+		global $bp;
 		
+		// Default value
+		$isBuddyPressFeed = false;
+		
+		// Check if the current BuddyPress page is a feed
+		if ( $bp->current_action == 'feed' || $bp->action_variables[0] == 'feed' )
+			$isBuddyPressFeed = true;
+		
+		// Return false if no BuddyPress feed has been called
+		return apply_filters('pbp_is_buddypress_feed', $isBuddyPressFeed);
+	}
+	
 	function LoginRedirect() {
 		// Get current position
 		$redirect_to = apply_filters('pbp_redirect_to_after_login', $_SERVER['REQUEST_URI']);
 			
 		// Check if user is logged in
 		if ( false == is_user_logged_in() ):
+			// Run action
+			do_action('pbp_login_redirect');
+	
 			// Check if current page is a feed
-			if ( is_feed() ):
+			if ( is_feed() || $this->IsBuddyPressFeed() ):
 				// Try to get saved login credentials
 				$credentials = array(
 					'user_login' => $_SERVER['PHP_AUTH_USER'],
@@ -90,7 +111,7 @@ class PrivateBuddyPress {
 				if ( is_wp_error( wp_signon( $credentials ) ) ):
 					header('WWW-Authenticate: Basic realm="' . get_option('blogtitle') . '"');
 					header('HTTP/1.0 401 Unauthorized');
-					die();
+					die('<h2>You need to be logged in to view this feed!</h2>');
 				endif;
 			// Redirect to login page if for current page a is required
 			elseif ( $this->LoginRequired() ):
@@ -119,6 +140,10 @@ class PrivateBuddyPress {
 	}
 		
 	function SaveAdminOptions() {
+		// Check for plausibility
+		if ( 'yes' != $_POST["bp_protection_options"] )
+			return;
+	
 		// Exclude homepage from protection
 		if ( '1' == $_POST["bp_protection_exclude_home"] )
 			$this->options->exclude->homepage = true;
@@ -152,6 +177,7 @@ class PrivateBuddyPress {
 					<label for="bp_protection_exclude_home"><input name="bp_protection_exclude_home" id="bp_protection_exclude_home" value="1" <?php checked(true, $this->options->exclude->homepage); ?> type="checkbox"> <?php _e('Front page', 'private-buddypress'); ?></label><br />
 					<label for="bp_protection_exclude_blogpages"><input name="bp_protection_exclude_blogpages" id="bp_protection_exclude_blogpages" value="1" <?php checked(true, $this->options->exclude->blogpages); ?> type="checkbox"> <?php _e('Blog pages (posts, archives and non-buddypress pages)', 'private-buddypress'); ?></label><br />
 					<label for="bp_protection_exclude_registration"><input name="bp_protection_exclude_registration" id="bp_protection_exclude_registration" value="1" <?php checked(true, $this->options->exclude->registration); ?> type="checkbox"> <?php _e('Registration', 'private-buddypress'); ?></label>
+					<input name="bp_protection_options" id="bp_protection_options" type="hidden" value="yes" />
 					<?php do_action('pbp_options_page'); ?>
 				</td>
 			</tr>
