@@ -5,7 +5,7 @@
  * Author: Dennis Morhardt
  * Author URI: http://www.dennismorhardt.de/
  * Plugin URI: http://bp-tutorials.de/
- * Version: 1.0.3
+ * Version: 1.0.4
  * Text Domain: private-buddypress
  * Domain Path: /languages
  *
@@ -90,6 +90,18 @@ class PrivateBuddyPress {
 		return apply_filters('pbp_is_buddypress_feed', $isBuddyPressFeed);
 	}
 	
+	function ProtectBlogFeeds() {
+		// Default value
+		$protectBlogFeeds = false;
+	
+		// If blog pages should be protect, add protection to the feeds
+		if ( is_feed() && false == $this->options->exclude->blogpages )
+			$protection = true;
+		
+		// Filter and return the value
+		return apply_filters('pbp_protect_blog_feeds', $protection);
+	}
+	
 	function LoginRedirect() {
 		// Get current position
 		$redirect_to = apply_filters('pbp_redirect_to_after_login', $_SERVER['REQUEST_URI']);
@@ -100,7 +112,7 @@ class PrivateBuddyPress {
 			do_action('pbp_login_redirect');
 	
 			// Check if current page is a feed
-			if ( is_feed() || $this->IsBuddyPressFeed() ):
+			if ( $this->ProtectBlogFeeds() || $this->IsBuddyPressFeed() ):
 				// Try to get saved login credentials
 				$credentials = array(
 					'user_login' => $_SERVER['PHP_AUTH_USER'],

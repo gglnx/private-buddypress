@@ -2,8 +2,8 @@
 Contributors: GIGALinux
 Tags: buddypress, protection, privacy, private, protect, hide, community
 Requires at least: 3.0, BuddyPress 1.2
-Tested up to: 3.0.1, BuddyPress 1.2.6
-Stable tag: 1.0.3
+Tested up to: 3.1, BuddyPress 1.3
+Stable tag: 1.0.4
 
 Protect your BuddyPress Installation from strangers. Only registered users will be allowed to view the installation.
 
@@ -12,6 +12,8 @@ Protect your BuddyPress Installation from strangers. Only registered users will 
 Protect your BuddyPress Installation from strangers. Only registered users will be allowed to view the installation and all other users will be redirected to the login page. Users attempting to view blog content via RSS are also authenticated via HTTP Auth.
 
 You can exclude the registration, the homepage and blog pages (e.g. posts, archives and non-buddypress pages) from protection. In combination with the plugin 'Invitation Code Checker' your installation stays private but the registration is for users with a special password open.
+
+The plugin includes a German and Hebrew (thanks to gstupp) translation.
 
 == Installation ==
 
@@ -56,7 +58,7 @@ add_filter('pbp_login_required_check', 'make_blog_directory_visible');`
 
 = Are there other actions or filters? =
 
-Yes, currently in Private Buddypress existing 5 actions:
+Yes, currently in Private Buddypress are existing 5 actions:
 
 *   **pbp_init**: Fired when Private BuddyPress is initialised
 *   **pbp_admin_init**: Fired when Private BuddyPress in the admin area is initialised
@@ -64,19 +66,25 @@ Yes, currently in Private Buddypress existing 5 actions:
 *   **pbp_save_options**: Fired when the options of Private BuddyPress has been changed
 *   **pbp_options_page**: Fired on the options page to added more fields for custom options
 
-Also in Private BuddyPress existing 5 filters:
+Also in Private BuddyPress are existing 6 filters:
 
 *   **pbp_is_buddypress_feed**: Boolean value if the current page is a BuddyPress feed
 *   **pbp_redirect_to_after_login**: Called URI from where the users came from
 *   **pbp_redirect_login_page**: URI where nonloggedin users are being redirected
 *   **pbp_login_required_check**: Boolean value if for the current page a login is needed
 *   **pbp_pre_options**: Object with the new options before they saved
+*   **pbp_protect_blog_feeds**: Boolean value if blog feeds should be protected
 
 == Screenshots ==
 
 1. Settings page, you can find it under `Settings -> Privacy`
 
 == Changelog ==
+
+= 1.0.4 =
+* Fixed: If blog pages excluded from protection, don't protect the feeds
+* Added: New filter: 'pbp_protect_blog_feeds'
+* Added: Hebrew translation, thanks to gstupp
 
 = 1.0.3 =
 * Fixed: Options no longer disappear suddenly
@@ -97,6 +105,9 @@ Also in Private BuddyPress existing 5 filters:
 * First release
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+Blog feeds are no longer protected if blog pages are excluded from the protection. Added also a Hebrew translation.
 
 = 1.0.3 =
 Options no longer disappear suddenly and BuddyPress feeds are now protected. Update is recommended.
