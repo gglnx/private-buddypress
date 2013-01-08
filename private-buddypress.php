@@ -5,7 +5,7 @@
  * Author: Dennis Morhardt
  * Author URI: http://www.dennismorhardt.de/
  * Plugin URI: http://bp-tutorials.de/
- * Version: 1.0.4
+ * Version: 1.0.5
  * Text Domain: private-buddypress
  * Domain Path: /languages
  *
@@ -51,7 +51,7 @@ class PrivateBuddyPress {
 		
 	function AdminInit() {
 		// Add settings section
-		add_settings_section('private-buddypress', __('BuddyPress Protection', 'private-buddypress'), array($this, 'AdminOptions'), 'privacy');
+		add_settings_section('private-buddypress', __('BuddyPress Protection', 'private-buddypress'), array($this, 'AdminOptions'), 'reading');
 		add_action('load-options.php', array($this, 'SaveAdminOptions'));
 		
 		// Run action
