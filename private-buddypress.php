@@ -80,7 +80,7 @@ class PrivateBuddyPress {
 		$isBuddyPressFeed = false;
 		
 		// Check if the current BuddyPress page is a feed
-		if ( bp_current_action() == 'feed' || bp_is_current_action( 'feed' ) )
+		if ( bp_current_action() == 'feed' || bp_is_action_variable( 'feed', 0 ) )
 			$isBuddyPressFeed = true;
 		
 		// Return false if no BuddyPress feed has been called
