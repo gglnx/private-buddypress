@@ -76,14 +76,11 @@ class PrivateBuddyPress {
 	}
 	
 	function IsBuddyPressFeed() {
-		// Get BuddyPress
-		global $bp;
-		
 		// Default value
 		$isBuddyPressFeed = false;
 		
 		// Check if the current BuddyPress page is a feed
-		if ( $bp->current_action == 'feed' || $bp->action_variables[0] == 'feed' )
+		if ( bp_current_action() == 'feed' || bp_is_current_action( 'feed' ) )
 			$isBuddyPressFeed = true;
 		
 		// Return false if no BuddyPress feed has been called
@@ -96,10 +93,10 @@ class PrivateBuddyPress {
 	
 		// If blog pages should be protect, add protection to the feeds
 		if ( is_feed() && false == $this->options->exclude->blogpages )
-			$protection = true;
+			$protectBlogFeeds = true;
 		
 		// Filter and return the value
-		return apply_filters('pbp_protect_blog_feeds', $protection);
+		return apply_filters('pbp_protect_blog_feeds', $protectBlogFeeds);
 	}
 	
 	function LoginRedirect() {
