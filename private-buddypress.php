@@ -153,23 +153,23 @@ class PrivateBuddyPress {
 		
 	function SaveAdminOptions() {
 		// Check for plausibility
-		if ( 'yes' != $_POST["bp_protection_options"] )
+		if ( isset($_POST["bp_protection_options"]) && 'yes' != $_POST["bp_protection_options"] )
 			return;
 	
 		// Exclude homepage from protection
-		if ( '1' == $_POST["bp_protection_exclude_home"] )
+		if ( isset($_POST["bp_protection_exclude_home"]) && '1' == $_POST["bp_protection_exclude_home"] )
 			$this->options->exclude->homepage = true;
 		else
 			$this->options->exclude->homepage = false;
 				
 		// Exclude registration from protection
-		if ( '1' == $_POST["bp_protection_exclude_registration"] )
+		if ( isset($_POST["bp_protection_exclude_registration"]) && '1' == $_POST["bp_protection_exclude_registration"] )
 			$this->options->exclude->registration = true;
 		else
 			$this->options->exclude->registration = false;
 			
 		// Exclude blog pages from protection
-		if ( '1' == $_POST["bp_protection_exclude_blogpages"] )
+		if ( isset($_POST["bp_protection_exclude_blogpages"]) && '1' == $_POST["bp_protection_exclude_blogpages"] )
 			$this->options->exclude->blogpages = true;
 		else
 			$this->options->exclude->blogpages = false;
